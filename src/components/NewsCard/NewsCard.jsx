@@ -1,17 +1,19 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatDate, truncateText } from '../../lib/utils'
 
 export default function NewsCard({ article, index }) {
+  const [imgError, setImgError] = useState(false)
+  
   const articleId = `${index}_${article.title
     .toLowerCase()
     .replace(/\s+/g, '_')
     .substring(0, 50)}`
 
   const handleArticleClick = () => {
-    // Store article data in sessionStorage before navigating
     sessionStorage.setItem('selectedArticle', JSON.stringify(article))
   }
 
@@ -20,27 +22,24 @@ export default function NewsCard({ article, index }) {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden cursor-pointer h-full flex flex-col">
         {/* Image Container */}
         <div className="relative h-48 w-full bg-gray-200 dark:bg-gray-700 flex-shrink-0">
-          {article.urlToImage ? (
+          {article.urlToImage && !imgError ? (
             <Image
               src={article.urlToImage}
               alt={article.title}
               fill
               className="object-cover"
               priority={false}
-              onError={(e) => {
-                e.target.src = '/placeholder.jpg'
-              }}
+              unoptimized={true}
+              onError={() => setImgError(true)}
             />
           ) : (
-            <div className="flex items-center justify-center h-full bg-gray-300 dark:bg-gray-600">
-              <svg
-                className="w-12 h-12 text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
-              </svg>
-            </div>
+            <Image
+              src="/placeholder.jpg"
+              alt="No image available"
+              fill
+              className="object-cover"
+              unoptimized={true}
+            />
           )}
         </div>
 
