@@ -143,7 +143,6 @@ describe('SearchBar Component', () => {
 
     await user.type(input, '   ')
     
-    // Button should still be disabled for whitespace-only input
-    expect(button).toBeDisabled()
+        expect(button).toBeDisabled()
   })
 })

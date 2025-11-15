@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SearchBar() {
-  const [query, setQuery] = useState('')
-  const router = useRouter()
+  const [query, setQuery] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query)}`)
-      setQuery('')
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+      setQuery("");
     }
-  }
+  };
 
   const handleClear = () => {
-    setQuery('')
-  }
+    setQuery("");
+  };
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md">
@@ -51,5 +51,5 @@ export default function SearchBar() {
         </button>
       </div>
     </form>
-  )
+  );
 }

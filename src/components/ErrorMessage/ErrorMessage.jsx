@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 export default function ErrorMessage({ message, onRetry }) {
   return (
@@ -33,5 +33,5 @@ export default function ErrorMessage({ message, onRetry }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

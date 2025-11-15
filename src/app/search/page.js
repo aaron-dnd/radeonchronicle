@@ -1,54 +1,54 @@
-'use client'
+"use client";
 
-import { useState, useEffect, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { newsApi } from '../../lib/api/newsApi'
-import NewsList from '../../components/NewsList/NewsList'
-import Pagination from '../../components/Pagination/Pagination'
-import LoadingSpinner from '../../components/LoadingSpinnner/LoadingSpinner'
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
-import CategoryTabs from '../../components/CategoryTabs/CategoryTabs'
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { newsApi } from "../../lib/api/newsApi";
+import NewsList from "../../components/NewsList/NewsList";
+import Pagination from "../../components/Pagination/Pagination";
+import LoadingSpinner from "../../components/LoadingSpinnner/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import CategoryTabs from "../../components/CategoryTabs/CategoryTabs";
 
 function SearchPageContent() {
-  const searchParams = useSearchParams()
-  const query = searchParams.get('q') || ''
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q") || "";
 
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalResults, setTotalResults] = useState(0)
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
 
-  const pageSize = 12
+  const pageSize = 12;
 
   useEffect(() => {
     if (query) {
-      setCurrentPage(1)
-      fetchSearchResults()
+      setCurrentPage(1);
+      fetchSearchResults();
     }
-  }, [query])
+  }, [query]);
 
   useEffect(() => {
     if (query && currentPage > 1) {
-      fetchSearchResults()
+      fetchSearchResults();
     }
-  }, [currentPage])
+  }, [currentPage]);
 
   const fetchSearchResults = async () => {
     try {
-      setLoading(true)
-      setError(null)
-      const response = await newsApi.searchNews(query, currentPage, pageSize)
-      setArticles(response.articles)
-      setTotalResults(response.totalResults)
+      setLoading(true);
+      setError(null);
+      const response = await newsApi.searchNews(query, currentPage, pageSize);
+      setArticles(response.articles);
+      setTotalResults(response.totalResults);
     } catch (err) {
-      setError(err)
+      setError(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const totalPages = Math.ceil(Math.min(totalResults, 100) / pageSize)
+  const totalPages = Math.ceil(Math.min(totalResults, 100) / pageSize);
 
   if (!query) {
     return (
@@ -57,7 +57,7 @@ function SearchPageContent() {
           Please enter a search query
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -67,7 +67,10 @@ function SearchPageContent() {
           Search Results
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-400">
-          Results for: <span className="font-semibold text-blue-600">&quot;{query}&quot;</span>
+          Results for:{" "}
+          <span className="font-semibold text-blue-600">
+            &quot;{query}&quot;
+          </span>
           {totalResults > 0 && (
             <span className="ml-2">({totalResults} results found)</span>
           )}
@@ -81,10 +84,14 @@ function SearchPageContent() {
         <ErrorMessage message={error.message} onRetry={fetchSearchResults} />
       )}
 
-      {!loading && !error && articles.length > 0 && <NewsList articles={articles} />}
+      {!loading && !error && articles.length > 0 && (
+        <NewsList articles={articles} />
+      )}
 
       {!loading && !error && articles.length === 0 && (
-        <ErrorMessage message={`No articles found for "${query}". Try a different search.`} />
+        <ErrorMessage
+          message={`No articles found for "${query}". Try a different search.`}
+        />
       )}
 
       {!loading && !error && totalPages > 1 && (
@@ -95,7 +102,7 @@ function SearchPageContent() {
         />
       )}
     </div>
-  )
+  );
 }
 
 export default function SearchPage() {
@@ -103,5 +110,5 @@ export default function SearchPage() {
     <Suspense fallback={<LoadingSpinner />}>
       <SearchPageContent />
     </Suspense>
-  )
+  );
 }

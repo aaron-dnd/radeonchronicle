@@ -1,41 +1,41 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { newsApi } from '../lib/api/newsApi'
-import NewsList from '../components/NewsList/NewsList'
-import Pagination from '../components/Pagination/Pagination'
-import LoadingSpinner from '../components/LoadingSpinnner/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage/ErrorMessage'
-import CategoryTabs from '../components/CategoryTabs/CategoryTabs'
+import { useState, useEffect } from "react";
+import { newsApi } from "../lib/api/newsApi";
+import NewsList from "../components/NewsList/NewsList";
+import Pagination from "../components/Pagination/Pagination";
+import LoadingSpinner from "../components/LoadingSpinnner/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
+import CategoryTabs from "../components/CategoryTabs/CategoryTabs";
 
 export default function Home() {
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalResults, setTotalResults] = useState(0)
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
 
-  const pageSize = 12
+  const pageSize = 12;
 
   useEffect(() => {
-    fetchHeadlines()
-  }, [currentPage])
+    fetchHeadlines();
+  }, [currentPage]);
 
   const fetchHeadlines = async () => {
     try {
-      setLoading(true)
-      setError(null)
-      const response = await newsApi.getTopHeadlines(currentPage, pageSize)
-      setArticles(response.articles)
-      setTotalResults(response.totalResults)
+      setLoading(true);
+      setError(null);
+      const response = await newsApi.getTopHeadlines(currentPage, pageSize);
+      setArticles(response.articles);
+      setTotalResults(response.totalResults);
     } catch (err) {
-      setError(err)
+      setError(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const totalPages = Math.ceil(Math.min(totalResults, 100) / pageSize)
+  const totalPages = Math.ceil(Math.min(totalResults, 100) / pageSize);
 
   return (
     <div>
@@ -55,10 +55,15 @@ export default function Home() {
         <ErrorMessage message={error.message} onRetry={fetchHeadlines} />
       )}
 
-      {!loading && !error && articles.length > 0 && <NewsList articles={articles} />}
+      {!loading && !error && articles.length > 0 && (
+        <NewsList articles={articles} />
+      )}
 
       {!loading && !error && articles.length === 0 && (
-        <ErrorMessage message="No articles found. Please try again." onRetry={fetchHeadlines} />
+        <ErrorMessage
+          message="No articles found. Please try again."
+          onRetry={fetchHeadlines}
+        />
       )}
 
       {!loading && !error && totalPages > 1 && (
@@ -69,5 +74,5 @@ export default function Home() {
         />
       )}
     </div>
-  )
+  );
 }

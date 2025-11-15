@@ -29,21 +29,17 @@ describe('NewsAPI Integration', () => {
 
     axios.create().get = jest.fn().mockResolvedValue(mockResponse)
 
-    // Note: Direct API testing would require proper mocking
-    // This is a placeholder for actual API tests
-    expect(mockResponse.data.articles).toHaveLength(1)
+            expect(mockResponse.data.articles).toHaveLength(1)
   })
 
   it('handles API errors gracefully', async () => {
-    // Error handling is tested in the errorHandler function
-    const mockError = {
+        const mockError = {
       response: {
         status: 429,
         data: { message: 'Rate limited' },
       },
     }
 
-    // Verify error structure
-    expect(mockError.response.status).toBe(429)
+        expect(mockError.response.status).toBe(429)
   })
 })

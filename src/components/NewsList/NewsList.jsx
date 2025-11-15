@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import NewsCard from '../NewsCard/NewsCard'
+import NewsCard from "../NewsCard/NewsCard";
 
 export default function NewsList({ articles }) {
   if (!articles || articles.length === 0) {
@@ -23,14 +23,18 @@ export default function NewsList({ articles }) {
           No articles found. Try searching or selecting a different category.
         </p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {articles.map((article, index) => (
-        <NewsCard key={`${index}-${article.url}`} article={article} index={index} />
+        <NewsCard
+          key={`${index}-${article.url}`}
+          article={article}
+          index={index}
+        />
       ))}
     </div>
-  )
+  );
 }

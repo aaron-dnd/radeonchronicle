@@ -49,6 +49,5 @@ export const generateArticleId = (article, index) => {
  */
 export const formatContent = (content) => {
   if (!content) return 'No content available'
-  // Remove [+X chars] patterns from content
-  return content.replace(/\[\+\d+\s*chars\]/g, '')
+    return content.replace(/\[\+\d+\s*chars\]/g, '')
 }

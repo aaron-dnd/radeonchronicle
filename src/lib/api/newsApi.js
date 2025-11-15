@@ -9,8 +9,7 @@ const apiClient = axios.create({
 })
 
 export const newsApi = {
-  // Get top headlines
-  getTopHeadlines: async (page = 1, pageSize = 12) => {
+    getTopHeadlines: async (page = 1, pageSize = 12) => {
     try {
       const response = await apiClient.get('/top-headlines', {
         params: {
@@ -26,8 +25,7 @@ export const newsApi = {
     }
   },
 
-  // Get news by category
-  getNewsByCategory: async (category, page = 1, pageSize = 12) => {
+    getNewsByCategory: async (category, page = 1, pageSize = 12) => {
     try {
       const response = await apiClient.get('/top-headlines', {
         params: {
@@ -44,8 +42,7 @@ export const newsApi = {
     }
   },
 
-  // Search news articles
-  searchNews: async (query, page = 1, pageSize = 12) => {
+    searchNews: async (query, page = 1, pageSize = 12) => {
     try {
       const response = await apiClient.get('/everything', {
         params: {
@@ -63,7 +60,6 @@ export const newsApi = {
   },
 }
 
-// Error handling helper
 function handleApiError(error) {
   if (axios.isAxiosError(error)) {
     if (error.response?.status === 401) {
