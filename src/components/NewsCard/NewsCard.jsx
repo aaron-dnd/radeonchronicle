@@ -28,7 +28,7 @@ export default function NewsCard({ article, index }) {
               className="object-cover"
               priority={false}
               onError={(e) => {
-                e.target.src = ''
+                e.target.src = '/placeholder.jpg'
               }}
             />
           ) : (
